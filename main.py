@@ -3,10 +3,11 @@ from cassandra.auth import PlainTextAuthProvider
 
 # Configuração de conexão com o Cassandra
 cluster = Cluster(
-    contact_points=["localhost"], 
+    contact_points=["127.0.0.1"], 
     port=9042, 
     auth_provider=PlainTextAuthProvider(username='admin', password='admin')
 )
+
 
 session = cluster.connect()
 
