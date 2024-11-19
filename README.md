@@ -19,3 +19,96 @@ Pedro Augusto Bento Rocha - 22.122.028-8<br>
 - docker-compose.yml: arquivo de configuração dos containers Docker para o SyllaDB
 - main.py: arquivo de execução do projeto, onde é criada toda a estrutura do banco, onde é populado, e onde são selecionadas as queries
 - data/: arquivo de volumes do Docker
+
+## Tables
+Para as tabelas, foi criada uma para cada query, considerando o modelo Querie -> Data -> Model
+### aluno_historico
+```
+CREATE TABLE IF NOT EXISTS aluno_historico (
+    RA text,
+    aluno text,
+    curso_id int,
+    curso_nome text,
+    disciplina_codigo text,
+    disciplina_nome text,
+    semestre int,
+    ano int,
+    nota float,
+    PRIMARY KEY (RA, ano, semestre, disciplina_codigo)
+) WITH CLUSTERING ORDER BY (ano DESC, semestre DESC);
+```
+### professor_disciplinas
+```
+CREATE TABLE IF NOT EXISTS professor_disciplinas (
+    professor_id text,
+    professor_nome text,
+    disciplina_codigo text,
+    disciplina_nome text,
+    semestre int,
+    ano int,
+    PRIMARY KEY (professor_id, ano, semestre, disciplina_codigo)
+) WITH CLUSTERING ORDER BY (ano DESC, semestre DESC);
+```
+### alunos_formados
+```
+CREATE TABLE IF NOT EXISTS alunos_formados (
+    curso_id int,
+    curso_nome text,
+    ano_formatura int,
+    semestre_formatura int,
+    RA text,
+    aluno_nome text,
+    PRIMARY KEY (curso_id, ano_formatura, semestre_formatura, RA)
+) WITH CLUSTERING ORDER BY (ano_formatura DESC, semestre_formatura DESC);
+```
+### chefes_departamento
+```
+CREATE TABLE IF NOT EXISTS chefes_departamento (
+    departamento text,
+    professor_id text,
+    professor_nome text,
+    PRIMARY KEY (departamento, professor_id)
+);
+```
+### tcc_grupos
+```
+CREATE TABLE IF NOT EXISTS tcc_grupos (
+    tcc_id int,
+    tcc_nome text,
+    professor_id text,
+    professor_nome text,
+    aluno_RA text,
+    aluno_nome text,
+    PRIMARY KEY (tcc_id, professor_id, aluno_RA)
+);
+```
+
+## Queries
+As queries estão localizadas no final do arquivo main.py, a partir da linha 256
+
+## Como rodar o projeto?
+1. Clone o projeto com o seguinte comando ```git clone https://github.com/guifornagiero/projeto-db-cassandra.git``` <br>
+2. Entre na pasta do projeto com o comando ```cd projeto-db-cassandra```
+3. Instale o Docker <br>
+4. Instale o interpretador do Python <br>
+5. Instale o driver do Neo4j e do Pandas com o comando ```pip install scylla-driver && pip install pandas``` <br>
+6. Suba o container Docker com o comando ```docker-compose up -d``` <br>
+7. Execute o arquivo main.py com o comando ```python main.py``` <br>
+
+## Problemas comuns
+- Pode ser que, na primeira vez que o comando ```python main.py``` for executado, mostre uma mensagem de erro.
+- Basta executar novamente, que o código funcionará de forma correta, trazendo os selects das queries.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
