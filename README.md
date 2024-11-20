@@ -83,8 +83,8 @@ CREATE TABLE IF NOT EXISTS tcc_grupos (
 );
 ```
 
-## Queries
-As queries estão localizadas no final do arquivo main.py, a partir da linha 256
+## Validação de Queries
+As queries estão localizadas no final do arquivo main.py, a partir da linha 256, apresentando o que ela faz e a query CQL
 
 ## Como rodar o projeto?
 1. Clone o projeto com o seguinte comando ```git clone https://github.com/guifornagiero/projeto-db-cassandra.git``` <br>
